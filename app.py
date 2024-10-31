@@ -26,13 +26,13 @@ def calcular_metricas(investimentos):
     vendas = leads * 0.15
     return acessos, leads, vendas
 
-# Valores de referência para os cálculos dos percentuais
+# Valores de referência para cálculos de variação percentual
 valor_base_acessos = 1000
 valor_base_leads = 250
 valor_base_vendas = 75
 
-# Parte 1: Influência
-if aba_selecionada == "TRACKfluencers":
+# Parte 1: Dash IMM - Influência
+if aba_selecionada == "Dash IMM":
     st.header("Dashboard de Marketing de Influência")
 
     # Bloco Inicial: KPIs Principais
@@ -44,14 +44,10 @@ if aba_selecionada == "TRACKfluencers":
     roi_mega_macro = 125.4  # ROI combinado de mega e macro influenciadores
     roi_micro_nano = 108.2  # ROI combinado de micro e nano influenciadores
 
-    with col1:
-        st.metric(label="Investimento Total (mil R$)", value=f"{investimento_total:.0f}", delta="")
-    with col2:
-        st.metric(label="ROI Geral de Influência", value=f"{roi_geral:.1f}%", delta="")
-    with col3:
-        st.metric(label="ROI Mega e Macro", value=f"{roi_mega_macro:.1f}%", delta="")
-    with col4:
-        st.metric(label="ROI Micro e Nano", value=f"{roi_micro_nano:.1f}%", delta="")
+    col1.metric(label="Investimento Total (mil R$)", value=f"{investimento_total:.0f}")
+    col2.metric(label="ROI Geral de Influência", value=f"{roi_geral:.1f}%")
+    col3.metric(label="ROI Mega e Macro", value=f"{roi_mega_macro:.1f}%")
+    col4.metric(label="ROI Micro e Nano", value=f"{roi_micro_nano:.1f}%")
 
     # Bloco 1: Alocação de Investimento por Tipo de Influenciador
     st.subheader("Alocação de Investimento por Tipo de Influenciador")
