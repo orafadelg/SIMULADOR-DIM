@@ -10,70 +10,72 @@ st.title("Simulador de Marketing Mix Modeling")
 st.sidebar.title("DIM")
 aba_selecionada = st.sidebar.selectbox("Selecione a aba", ["Dash IMM", "Media Behavior", "TRACKfluencers", "BRAINfluencers", "Governança"])
 
-# Definindo os canais e investimentos iniciais
+import streamlit as st
+import numpy as np
+
+# Título principal do aplicativo
+st.title("Simulador de Marketing de Influência")
+
+# Sidebar com título e seleção de aba
+st.sidebar.title("Influência")
+aba_selecionada = st.sidebar.selectbox("Selecione a aba", ["Influência"])
+
+# Definindo os tipos de influenciadores e investimentos iniciais
 investimentos_iniciais = {
-    "Google Ads": 100,
-    "Meta Ads": 100,
-    "Out of Home": 50,
-    "Rádio": 75,
-    "TV Paga": 150,
-    "TV Aberta": 200,
-    "Influenciadores": 120
+    "Megainfluenciadores": 150,
+    "Macroinfluenciadores": 120,
+    "Mid-Influenciadores": 80,
+    "Microinfluenciadores": 60,
+    "Nanoinfluenciadores": 40
 }
 
 # Função para calcular métricas com base nos investimentos
 def calcular_metricas(investimentos):
-    acessos = sum(investimentos.values()) * 0.5
-    leads = acessos * 0.3
-    vendas = leads * 0.1
+    acessos = sum(investimentos.values()) * 0.4
+    leads = acessos * 0.25
+    vendas = leads * 0.15
     return acessos, leads, vendas
 
-# Valores de referência para o cálculo das mudanças percentuais
-valor_base_acessos = 300
-valor_base_leads = 100
-valor_base_vendas = 10
+# Valores de referência para os cálculos dos percentuais
+valor_base_acessos = 1000
+valor_base_leads = 250
+valor_base_vendas = 75
 
-# Parte 1: Dash IMM
-if aba_selecionada == "Dash IMM":
-    st.header("Dashboard de Marketing Mix Modeling")
+# Parte 1: Influência
+if aba_selecionada == "Influência":
+    st.header("Dashboard de Marketing de Influência")
 
     # Bloco Inicial: KPIs Principais
-    st.subheader("Principais KPIs de Marketing")
+    st.subheader("Principais KPIs de Influência")
     col1, col2, col3, col4 = st.columns(4)
 
     investimento_total = sum(investimentos_iniciais.values())
-    roi_geral = 120.5  # ROI Geral fictício inicial em %
-    roi_online = 130.2  # ROI Online fictício inicial em %
-    roi_offline = 110.3  # ROI Offline fictício inicial em %
+    roi_geral = 115.7  # ROI Geral fictício inicial em %
+    roi_mega_macro = 125.4  # ROI combinado de mega e macro influenciadores
+    roi_micro_nano = 108.2  # ROI combinado de micro e nano influenciadores
 
     with col1:
-        st.metric(label="Investimento Total (mil R$)", value=f"{investimento_total:.0f}", delta="",
-                  delta_color="off")
+        st.metric(label="Investimento Total (mil R$)", value=f"{investimento_total:.0f}", delta="")
     with col2:
-        st.metric(label="ROI Geral de Marketing", value=f"{roi_geral:.1f}%", delta="",
-                  delta_color="off")
+        st.metric(label="ROI Geral de Influência", value=f"{roi_geral:.1f}%", delta="")
     with col3:
-        st.metric(label="ROI Online", value=f"{roi_online:.1f}%", delta="",
-                  delta_color="off")
+        st.metric(label="ROI Mega e Macro", value=f"{roi_mega_macro:.1f}%", delta="")
     with col4:
-        st.metric(label="ROI Offline", value=f"{roi_offline:.1f}%", delta="",
-                  delta_color="off")
+        st.metric(label="ROI Micro e Nano", value=f"{roi_micro_nano:.1f}%", delta="")
 
-    # Bloco 1: Alocação de Investimento por Canal
-    st.subheader("Alocação de Investimento por Canal")
+    # Bloco 1: Alocação de Investimento por Tipo de Influenciador
+    st.subheader("Alocação de Investimento por Tipo de Influenciador")
     col1, col2, col3 = st.columns(3)
 
     investimentos = {}
     with col1:
-        investimentos["Google Ads"] = st.slider("Google Ads (mil R$)", 0, 500, investimentos_iniciais["Google Ads"])
-        investimentos["Meta Ads"] = st.slider("Meta Ads (mil R$)", 0, 500, investimentos_iniciais["Meta Ads"])
-        investimentos["Out of Home"] = st.slider("Out of Home (mil R$)", 0, 500, investimentos_iniciais["Out of Home"])
+        investimentos["Megainfluenciadores"] = st.slider("Megainfluenciadores (mil R$)", 0, 500, investimentos_iniciais["Megainfluenciadores"])
+        investimentos["Macroinfluenciadores"] = st.slider("Macroinfluenciadores (mil R$)", 0, 500, investimentos_iniciais["Macroinfluenciadores"])
     with col2:
-        investimentos["Rádio"] = st.slider("Rádio (mil R$)", 0, 500, investimentos_iniciais["Rádio"])
-        investimentos["TV Paga"] = st.slider("TV Paga (mil R$)", 0, 500, investimentos_iniciais["TV Paga"])
+        investimentos["Mid-Influenciadores"] = st.slider("Mid-Influenciadores (mil R$)", 0, 500, investimentos_iniciais["Mid-Influenciadores"])
     with col3:
-        investimentos["TV Aberta"] = st.slider("TV Aberta (mil R$)", 0, 500, investimentos_iniciais["TV Aberta"])
-        investimentos["Influenciadores"] = st.slider("Influenciadores (mil R$)", 0, 500, investimentos_iniciais["Influenciadores"])
+        investimentos["Microinfluenciadores"] = st.slider("Microinfluenciadores (mil R$)", 0, 500, investimentos_iniciais["Microinfluenciadores"])
+        investimentos["Nanoinfluenciadores"] = st.slider("Nanoinfluenciadores (mil R$)", 0, 500, investimentos_iniciais["Nanoinfluenciadores"])
 
     # Bloco 2: Simulação de Resultados
     st.subheader("Simulação de Resultados")
@@ -83,33 +85,6 @@ if aba_selecionada == "Dash IMM":
     col1.metric("Acessos", f"{acessos:.0f}", f"{(acessos / valor_base_acessos - 1) * 100:.0f}%", delta_color="normal")
     col2.metric("Leads", f"{leads:.0f}", f"{(leads / valor_base_leads - 1) * 100:.0f}%", delta_color="normal")
     col3.metric("Vendas", f"{vendas:.0f}", f"{(vendas / valor_base_vendas - 1) * 100:.0f}%", delta_color="normal")
-
-    # Bloco 3: ROI MIX Marketing com mudança entre matriz e pesos
-    st.subheader("ROI Mix Marketing")
-    matriz_ou_pesos = st.radio("Selecione a visualização:", ("Matrix", "Pesos"))
-
-    if matriz_ou_pesos == "Matrix":
-        fig_matrix = go.Figure()
-        fig_matrix.add_trace(go.Scatter(
-            x=[30, 15, 25, 35, 20, 40, 45],
-            y=[0.5, 0.8, 1.0, 1.3, 0.6, 1.5, 1.8],
-            mode='markers+text',
-            text=list(investimentos.keys()),
-            textposition="top center",
-            marker=dict(size=[v * 0.1 for v in investimentos.values()], color='red')
-        ))
-        fig_matrix.update_layout(title="Distribuição de ROI por Canal", xaxis_title="Investimento (%)", yaxis_title="Peso no Resultado")
-        st.plotly_chart(fig_matrix)
-
-    else:
-        fig_pesos = go.Figure(go.Bar(
-            x=list(investimentos.values()),
-            y=list(investimentos.keys()),
-            orientation='h',
-            marker=dict(color="red")
-        ))
-        fig_pesos.update_layout(title="Pesos dos Canais de Mídia")
-        st.plotly_chart(fig_pesos)
 
 # Parte 2: Media Behavior
 elif aba_selecionada == "Media Behavior":
