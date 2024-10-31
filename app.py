@@ -32,7 +32,7 @@ valor_base_leads = 250
 valor_base_vendas = 75
 
 # Parte 1: Influência
-if aba_selecionada == "Influência":
+if aba_selecionada == "TRACKfluencers":
     st.header("Dashboard de Marketing de Influência")
 
     # Bloco Inicial: KPIs Principais
@@ -96,6 +96,7 @@ if aba_selecionada == "Influência":
         yaxis_title="Impacto Estimado",
     )
     st.plotly_chart(fig_bolhas)
+
 
 # Parte 2: Media Behavior
 elif aba_selecionada == "Media Behavior":
