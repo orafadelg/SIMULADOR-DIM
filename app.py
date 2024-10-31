@@ -10,16 +10,6 @@ st.title("Simulador de Marketing Mix Modeling")
 st.sidebar.title("DIM")
 aba_selecionada = st.sidebar.selectbox("Selecione a aba", ["Dash IMM", "Media Behavior", "TRACKfluencers", "BRAINfluencers", "Governança"])
 
-import streamlit as st
-import numpy as np
-
-# Título principal do aplicativo
-st.title("Simulador de Marketing de Influência")
-
-# Sidebar com título e seleção de aba
-st.sidebar.title("Influência")
-aba_selecionada = st.sidebar.selectbox("Selecione a aba", ["Influência"])
-
 # Definindo os tipos de influenciadores e investimentos iniciais
 investimentos_iniciais = {
     "Megainfluenciadores": 150,
@@ -85,6 +75,27 @@ if aba_selecionada == "Influência":
     col1.metric("Acessos", f"{acessos:.0f}", f"{(acessos / valor_base_acessos - 1) * 100:.0f}%", delta_color="normal")
     col2.metric("Leads", f"{leads:.0f}", f"{(leads / valor_base_leads - 1) * 100:.0f}%", delta_color="normal")
     col3.metric("Vendas", f"{vendas:.0f}", f"{(vendas / valor_base_vendas - 1) * 100:.0f}%", delta_color="normal")
+
+    # Bloco 3: Distribuição de Impacto por Influenciador (Gráfico de Bolhas)
+    st.subheader("Distribuição de Impacto por Tipo de Influenciador")
+    impacto = [invest * 0.02 for invest in investimentos.values()]  # Cálculo fictício para impacto
+    fig_bolhas = go.Figure()
+
+    fig_bolhas.add_trace(go.Scatter(
+        x=list(investimentos.values()),
+        y=impacto,
+        mode='markers+text',
+        marker=dict(size=[i * 0.4 for i in investimentos.values()], color='red', opacity=0.6),
+        text=list(investimentos.keys()),
+        textposition="top center"
+    ))
+
+    fig_bolhas.update_layout(
+        title="Impacto por Distribuição de Investimento em Influenciadores",
+        xaxis_title="Investimento (mil R$)",
+        yaxis_title="Impacto Estimado",
+    )
+    st.plotly_chart(fig_bolhas)
 
 # Parte 2: Media Behavior
 elif aba_selecionada == "Media Behavior":
