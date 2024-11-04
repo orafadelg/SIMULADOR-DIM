@@ -12,24 +12,24 @@ aba_selecionada = st.sidebar.selectbox("Selecione a aba", ["Dash IMM", "Media Be
 
 # Definindo os tipos de influenciadores e investimentos iniciais
 investimentos_iniciais = {
-    "Megainfluenciadores": 150,
-    "Macroinfluenciadores": 120,
-    "Mid-Influenciadores": 80,
-    "Microinfluenciadores": 60,
-    "Nanoinfluenciadores": 40
+    "Megainfluenciadores": 300,
+    "Macroinfluenciadores": 250,
+    "Mid-Influenciadores": 200,
+    "Microinfluenciadores": 150,
+    "Nanoinfluenciadores": 100
 }
 
 # Função para calcular métricas com base nos investimentos
 def calcular_metricas(investimentos):
-    acessos = sum(investimentos.values()) * 0.4
-    leads = acessos * 0.25
-    vendas = leads * 0.15
+    acessos = sum(investimentos.values()) * 1.2
+    leads = acessos * 0.3
+    vendas = leads * 0.25
     return acessos, leads, vendas
 
 # Valores de referência para cálculos de variação percentual
-valor_base_acessos = 1000
-valor_base_leads = 250
-valor_base_vendas = 75
+valor_base_acessos = 50000
+valor_base_leads = 15000
+valor_base_vendas = 5000
 
 # Parte 1: Dash IMM - Influência
 st.sidebar.title("DIM - Dashboard de Influência e Mídia")
@@ -65,9 +65,9 @@ if aba_selecionada == "Dash IMM":
     col1, col2, col3, col4 = st.columns(4)
     
     investimento_total = sum(investimentos_iniciais.values())
-    roi_geral = 120.5  # Exemplo de ROI Geral
-    roi_mega_macro = 130.1  # ROI para Mega e Macro
-    roi_micro_nano = 110.3  # ROI para Micro e Nano
+    roi_geral = 140.2  # Exemplo de ROI Geral em %
+    roi_mega_macro = 150.8  # ROI para Mega e Macro
+    roi_micro_nano = 120.4  # ROI para Micro e Nano
 
     col1.metric(label="Total Investido (mil R$)", value=f"{investimento_total:.0f}")
     col2.metric(label="ROI Total de Influência", value=f"{roi_geral:.1f}%")
@@ -80,33 +80,33 @@ if aba_selecionada == "Dash IMM":
     
     investimentos = {}
     with col1:
-        investimentos["Megainfluenciadores"] = st.slider("Megainfluenciadores (mil R$)", 0, 500, investimentos_iniciais["Megainfluenciadores"])
-        investimentos["Macroinfluenciadores"] = st.slider("Macroinfluenciadores (mil R$)", 0, 500, investimentos_iniciais["Macroinfluenciadores"])
+        investimentos["Megainfluenciadores"] = st.slider("Megainfluenciadores (mil R$)", 0, 800, investimentos_iniciais["Megainfluenciadores"])
+        investimentos["Macroinfluenciadores"] = st.slider("Macroinfluenciadores (mil R$)", 0, 800, investimentos_iniciais["Macroinfluenciadores"])
     with col2:
-        investimentos["Mid-Influenciadores"] = st.slider("Mid-Influenciadores (mil R$)", 0, 500, investimentos_iniciais["Mid-Influenciadores"])
+        investimentos["Mid-Influenciadores"] = st.slider("Mid-Influenciadores (mil R$)", 0, 800, investimentos_iniciais["Mid-Influenciadores"])
     with col3:
-        investimentos["Microinfluenciadores"] = st.slider("Microinfluenciadores (mil R$)", 0, 500, investimentos_iniciais["Microinfluenciadores"])
-        investimentos["Nanoinfluenciadores"] = st.slider("Nanoinfluenciadores (mil R$)", 0, 500, investimentos_iniciais["Nanoinfluenciadores"])
+        investimentos["Microinfluenciadores"] = st.slider("Microinfluenciadores (mil R$)", 0, 800, investimentos_iniciais["Microinfluenciadores"])
+        investimentos["Nanoinfluenciadores"] = st.slider("Nanoinfluenciadores (mil R$)", 0, 800, investimentos_iniciais["Nanoinfluenciadores"])
 
     # Bloco de resultados de simulação
     st.subheader("Resultados da Simulação")
     acessos, leads, vendas = calcular_metricas(investimentos)
 
     col1, col2, col3 = st.columns(3)
-    col1.metric("Acessos", f"{acessos:.0f}", f"+{(acessos / valor_base_acessos - 1) * 100:.0f}%", delta_color="normal")
-    col2.metric("Leads", f"{leads:.0f}", f"+{(leads / valor_base_leads - 1) * 100:.0f}%", delta_color="normal")
-    col3.metric("Vendas", f"{vendas:.0f}", f"+{(vendas / valor_base_vendas - 1) * 100:.0f}%", delta_color="normal")
+    col1.metric("Acessos", f"{acessos:.0f}", f"{(acessos / valor_base_acessos - 1) * 100:.0f}%", delta_color="normal")
+    col2.metric("Leads", f"{leads:.0f}", f"{(leads / valor_base_leads - 1) * 100:.0f}%", delta_color="normal")
+    col3.metric("Vendas", f"{vendas:.0f}", f"{(vendas / valor_base_vendas - 1) * 100:.0f}%", delta_color="normal")
 
     # Distribuição de Impacto por Tipo de Influenciador
     st.subheader("Distribuição de Impacto dos Influenciadores")
-    impacto = [inv * 0.03 for inv in investimentos.values()]  # Ajuste do impacto
+    impacto = [invest * 0.05 for invest in investimentos.values()]  # Ajuste do impacto
     fig_bolhas = go.Figure()
 
     fig_bolhas.add_trace(go.Scatter(
         x=list(investimentos.values()),
         y=impacto,
         mode='markers+text',
-        marker=dict(size=[i * 0.4 for i in investimentos.values()], color='purple', opacity=0.6),
+        marker=dict(size=[i * 0.3 for i in investimentos.values()], color='purple', opacity=0.6),
         text=list(investimentos.keys()),
         textposition="top center"
     ))
@@ -117,9 +117,7 @@ if aba_selecionada == "Dash IMM":
         yaxis_title="Impacto Estimado"
     )
     st.plotly_chart(fig_bolhas)
-
-
-
+    
 # Parte 2: Media Behavior
 elif aba_selecionada == "Media Behavior":
     st.header("Comportamento de Mídia")
