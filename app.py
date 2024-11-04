@@ -32,29 +32,6 @@ valor_base_leads = 15000
 valor_base_vendas = 5000
 
 # Parte 1: Dash IMM - Influência
-st.sidebar.title("DIM - Dashboard de Influência e Mídia")
-aba_selecionada = st.sidebar.selectbox("Selecione a seção", ["Dash IMM", "Comportamento de Mídia", "Influência por Campanhas", "Brainfluencers", "Governança"])
-
-# Tipos de influenciadores e valores de investimento iniciais
-investimentos_iniciais = {
-    "Megainfluenciadores": 150,
-    "Macroinfluenciadores": 120,
-    "Mid-Influenciadores": 80,
-    "Microinfluenciadores": 60,
-    "Nanoinfluenciadores": 40
-}
-
-# Função de cálculo de métricas com base nos investimentos
-def calcular_metricas(investimentos):
-    acessos = sum(investimentos.values()) * 0.4
-    leads = acessos * 0.25
-    vendas = leads * 0.15
-    return acessos, leads, vendas
-
-# Valores de referência ajustados para cálculos de variação percentual positiva
-valor_base_acessos = 800
-valor_base_leads = 200
-valor_base_vendas = 50
 
 # Dash IMM: Análise de Influência
 if aba_selecionada == "Dash IMM":
