@@ -21,9 +21,9 @@ investimentos_iniciais = {
 
 # Função para calcular métricas com base nos investimentos
 def calcular_metricas(investimentos):
-    acessos = sum(investimentos.values()) * 1.2
-    leads = acessos * 0.3
-    vendas = leads * 0.25
+    acessos = sum(investimentos.values()) * 1.6
+    leads = acessos * 0.6
+    vendas = leads * 0.45
     return acessos, leads, vendas
 
 # Valores de referência para cálculos de variação percentual
