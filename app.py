@@ -27,9 +27,9 @@ def calcular_metricas(investimentos):
     return acessos, leads, vendas
 
 # Valores de referência para cálculos de variação percentual
-valor_base_acessos = 50000
-valor_base_leads = 15000
-valor_base_vendas = 5000
+valor_base_acessos = 5000
+valor_base_leads = 1500
+valor_base_vendas = 500
 
 # Parte 1: Dash IMM - Influência
 
