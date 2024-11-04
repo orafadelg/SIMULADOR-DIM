@@ -21,15 +21,15 @@ investimentos_iniciais = {
 
 # Função para calcular métricas com base nos investimentos
 def calcular_metricas(investimentos):
-    acessos = sum(investimentos.values()) * 1.6
-    leads = acessos * 0.4
+    acessos = sum(investimentos.values()) * 1.4
+    leads = acessos * 0.5
     vendas = leads * 0.3
     return acessos, leads, vendas
 
 # Valores de referência para cálculos de variação percentual
-valor_base_acessos = 5000
-valor_base_leads = 1500
-valor_base_vendas = 500
+valor_base_acessos = 2000
+valor_base_leads = 1000
+valor_base_vendas = 250
 
 # Parte 1: Dash IMM - Influência
 
